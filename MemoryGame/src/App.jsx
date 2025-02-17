@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Form from "./components/Form";
 import MemoryCard from "./components/MemoryCard";
+import GameOver from "./components/GameOver";
 
 export default function App() {
   const [isGameOn, setIsGameOn] = useState(false);
@@ -55,7 +56,7 @@ export default function App() {
 
   function getRandomIndices(data) {
     const randomIndicesArray = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 25; i++) {
       const randomNum = Math.floor(Math.random() * data.length);
       if (!randomIndicesArray.includes(randomNum)) {
         randomIndicesArray.push(randomNum);
@@ -78,7 +79,6 @@ export default function App() {
   }
 
   function turnCard(index, name) {
-
     if (selectedCards.length < 2) {
       setSelectedCards((prevSelectedCards) => [
         ...prevSelectedCards,
@@ -89,10 +89,20 @@ export default function App() {
     }
   }
 
+  //video 3:02:21
+
+  function resetGame() {
+    setIsGameOn(false);
+    setMatchedCards([]);
+    setSelectedCards([]);
+    setAreAllCardsMatched(false);
+  }
+
   return (
     <main>
-      <h1>Memory</h1>
+      <h1>* Memory Game *</h1>
       {!isGameOn && <Form handleSubmit={startGame} />}
+      {areAllCardsMatched && <GameOver handleClick={resetGame}></GameOver>}
       {isGameOn && (
         <MemoryCard
           handleClick={turnCard}
