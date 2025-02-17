@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Form from "./components/Form";
 import MemoryCard from "./components/MemoryCard";
 import GameOver from "./components/GameOver";
+import ErrorCard from "./components/ErrorCard";
 
 export default function App() {
   const [isGameOn, setIsGameOn] = useState(false);
@@ -9,6 +10,7 @@ export default function App() {
   const [selectedCards, setSelectedCards] = useState([]);
   const [matchedCards, setMatchedCards] = useState([]);
   const [areAllCardsMatched, setAreAllCardsMatched] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     if (
@@ -30,7 +32,8 @@ export default function App() {
 
     try {
       const response = await fetch(
-        "https://emojihub.yurace.pro/api/all/category/animals-and-nature"
+        //"https://emojihub.yurace.pro/api/all/category/animals-and-nature"
+        "https://emojihub.yurace.pro/api/all"
       );
 
       if (!response.ok) {
@@ -46,6 +49,7 @@ export default function App() {
       setIsGameOn(true);
     } catch (err) {
       console.error(err);
+      setIsError(true);
     }
   }
 
@@ -56,7 +60,7 @@ export default function App() {
 
   function getRandomIndices(data) {
     const randomIndicesArray = [];
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 5; i++) {
       const randomNum = Math.floor(Math.random() * data.length);
       if (!randomIndicesArray.includes(randomNum)) {
         randomIndicesArray.push(randomNum);
@@ -89,8 +93,6 @@ export default function App() {
     }
   }
 
-  //video 3:02:21
-
   function resetGame() {
     setIsGameOn(false);
     setMatchedCards([]);
@@ -98,10 +100,14 @@ export default function App() {
     setAreAllCardsMatched(false);
   }
 
+  function resetError() {
+    setIsError(false);
+  }
+
   return (
     <main>
       <h1>* Memory Game *</h1>
-      {!isGameOn && <Form handleSubmit={startGame} />}
+      {!isGameOn && !isError && <Form handleSubmit={startGame} />}
       {areAllCardsMatched && <GameOver handleClick={resetGame}></GameOver>}
       {isGameOn && (
         <MemoryCard
@@ -111,6 +117,7 @@ export default function App() {
           matchedCards={matchedCards}
         />
       )}
+      {isError && <ErrorCard handleClick={resetError}></ErrorCard>}
     </main>
   );
 }
