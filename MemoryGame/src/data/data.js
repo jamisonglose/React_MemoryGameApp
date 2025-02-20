@@ -1,15 +1,19 @@
 const data = {
   category: [
     {
-      name: "Animals and nature",
+      name: "All",
+      value: "",
+    },
+    {
+      name: "Animals & Nature",
       value: "animals-and-nature",
     },
     {
-      name: "Food and drink",
+      name: "Food & Drink",
       value: "food-and-drink",
     },
     {
-      name: "Travel and places",
+      name: "Travel & Places",
       value: "travel-and-places",
     },
     {

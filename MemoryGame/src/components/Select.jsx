@@ -1,4 +1,5 @@
 import { data } from "../data/data";
+import Option from "./Option";
 
 
 export default function Select({ handleChange }) {
@@ -6,7 +7,7 @@ export default function Select({ handleChange }) {
     <div className="form__inner-wrapper" key={key}>
       <label htmlFor={key}>Select a {key}:</label>
       <select id={key} name={key} onChange={handleChange}>
-
+    <Option valueArray={value} />
       </select>
     </div>
   )); 
