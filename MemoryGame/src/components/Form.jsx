@@ -16,4 +16,3 @@ export default function Form({ handleSubmit, handleChange }) {
   );
 }
 
-//video: 4:04
